@@ -1,6 +1,9 @@
 package br.com.alura.firstweb.servlet;
 
 import java.io.IOException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -20,12 +23,25 @@ public class App extends HttpServlet{
     protected void doPost(HttpServletRequest req, HttpServletResponse res) throws IOException, ServletException{
 
         String nome = req.getParameter("nome");
+        String dataNascimento = req.getParameter("data");
+
+        SimpleDateFormat fmt = new SimpleDateFormat("dd/MM/yy");
+        Date data = null;
+
+        try {
+            data = fmt.parse(dataNascimento);
+        } catch (ParseException e) {
+            throw new ServletException(e);
+        }
  
         Pessoa p = new Pessoa(nome);
+        p.setData(data);
+
         b.adiciona(p);
 
-        RequestDispatcher reqDis = req.getRequestDispatcher("/novaPessoa.jsp");
-        req.setAttribute("nome", nome);
-        reqDis.forward(req, res);
+        res.sendRedirect("/app/listas");
+        // RequestDispatcher reqDis = req.getRequestDispatcher("/novaPessoa.jsp");
+        // req.setAttribute("nome", nome);
+        // reqDis.forward(req, res);
     }
 }
