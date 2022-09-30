@@ -4,6 +4,10 @@ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd" 
 version="3.1">
 
+  <display-name>firstweb</display-name>
+
+<!--
+
   <servlet>
     <servlet-name> app </servlet-name>
     <servlet-class> br.com.alura.firstweb.servlet.App </servlet-class> 
@@ -11,7 +15,13 @@ version="3.1">
   
   <servlet-mapping>
     <servlet-name> app </servlet-name>
-    <url-pattern>/firstweb</url-pattern>
+    <url-pattern>/app/listas</url-pattern>
   </servlet-mapping>
+  
+-->
 
+  <welcome-file-list>
+    <welcome-file>/app/listas</welcome-file>
+    
+  </welcome-file-list>
 </web-app>
