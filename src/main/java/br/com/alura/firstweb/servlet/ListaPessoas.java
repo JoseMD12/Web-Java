@@ -14,7 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 public class ListaPessoas extends HttpServlet{
     
     @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse res) throws IOException, ServletException{
+    protected void service(HttpServletRequest req, HttpServletResponse res) throws IOException, ServletException{
 
         Banco b = new Banco();
         List<Pessoa> pessoas = b.getLista();

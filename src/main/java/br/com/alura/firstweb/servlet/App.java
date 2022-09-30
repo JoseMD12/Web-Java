@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -22,8 +23,11 @@ public class App extends HttpServlet{
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse res) throws IOException, ServletException{
 
+        Pessoa p = null;
+
         String nome = req.getParameter("nome");
         String dataNascimento = req.getParameter("data");
+        String idString = req.getParameter("id");
 
         SimpleDateFormat fmt = new SimpleDateFormat("dd/MM/yy");
         Date data = null;
@@ -33,15 +37,20 @@ public class App extends HttpServlet{
         } catch (ParseException e) {
             throw new ServletException(e);
         }
- 
-        Pessoa p = new Pessoa(nome);
-        p.setData(data);
 
-        b.adiciona(p);
+        if(!idString.isEmpty()){
+            int id = Integer.parseInt(idString);
+            p = b.getPessoa(id);
+            p.setData(data);
+            p.setNome(nome);
+
+        } else {
+            p = new Pessoa(nome);
+            p.setData(data);
+
+            b.adiciona(p);
+        }
 
         res.sendRedirect("/app/listas");
-        // RequestDispatcher reqDis = req.getRequestDispatcher("/novaPessoa.jsp");
-        // req.setAttribute("nome", nome);
-        // reqDis.forward(req, res);
     }
 }
