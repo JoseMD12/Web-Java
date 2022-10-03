@@ -1,9 +1,6 @@
 package br.com.alura.firstweb.servlet;
 
 import java.io.IOException;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -11,7 +8,10 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-@WebServlet(urlPatterns="/app")
+import br.com.alura.firstweb.acao.*;
+import br.com.alura.firstweb.modelo.Banco;
+
+@WebServlet(urlPatterns="/entrada")
 public class App extends HttpServlet{
 
     public static Banco b = new Banco();
@@ -19,36 +19,33 @@ public class App extends HttpServlet{
     private static final long serialVersionUID = 2806421523585360625L;
 
     @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse res) throws IOException, ServletException{
+    protected void service(HttpServletRequest req, HttpServletResponse res) throws IOException, ServletException{
 
-        Pessoa p = null;
-
-        String nome = req.getParameter("nome");
-        String dataNascimento = req.getParameter("data");
-        String idString = req.getParameter("id");
-
-        SimpleDateFormat fmt = new SimpleDateFormat("dd/MM/yy");
-        Date data = null;
-
-        try {
-            data = fmt.parse(dataNascimento);
-        } catch (ParseException e) {
-            throw new ServletException(e);
+        String acao = req.getParameter("acao");
+        if(acao == null){
+            acao = "lista";
         }
 
-        if(!idString.isEmpty()){
-            int id = Integer.parseInt(idString);
-            p = b.getPessoa(id);
-            p.setData(data);
-            p.setNome(nome);
+        switch(acao){
+            case "adiciona":                                        //C
+                Adiciona add = new Adiciona();
+                add.executa(req, res);
+                break;
 
-        } else {
-            p = new Pessoa(nome);
-            p.setData(data);
+            case "lista":                                           //R
+                ListaPessoas listar = new ListaPessoas();
+                listar.executa(req, res);
+                break;
 
-            b.adiciona(p);
+            case "edita":                                           //U
+                Edita edit = new Edita();
+                edit.executa(req, res);
+                break;
+
+            case "remove":                                          //D
+                Remove rem = new Remove();
+                rem.executa(req, res);
+                break;
         }
-
-        res.sendRedirect("/app/listas");
     }
 }
