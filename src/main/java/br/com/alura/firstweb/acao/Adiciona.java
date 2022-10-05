@@ -10,10 +10,10 @@ import javax.servlet.http.HttpServletResponse;
 
 import br.com.alura.firstweb.modelo.*;
 
-public class Adiciona{
+public class Adiciona implements Acao{
     
 
-    public void executa(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException{
+    public String executa(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException{
 
         String nome = req.getParameter("nome");
         String data = req.getParameter("data");
@@ -37,6 +37,7 @@ public class Adiciona{
             Pessoa p = new Pessoa(nome);
             p.setData(dataNascimento);
             b.adiciona(p);
+            req.setAttribute("pessoa", p);
 
         } else {
 
@@ -47,7 +48,6 @@ public class Adiciona{
 
         }
 
-        req.setAttribute("lista", b.getLista());
-        res.sendRedirect("/entrada?acao=lista");
+        return "redirect:entrada?acao=ListaPessoas";
     }
 }

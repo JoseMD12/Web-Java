@@ -24,4 +24,10 @@ version="3.1">
     <welcome-file>/app/listas</welcome-file>
     
   </welcome-file-list>
+
+  <session-config>
+    <!-- 10 min -->
+    <session-timeout>10</session-timeout>
+</session-config> 
+
 </web-app>
