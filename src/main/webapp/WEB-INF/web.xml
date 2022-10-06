@@ -18,16 +18,47 @@ version="3.1">
     <url-pattern>/app/listas</url-pattern>
   </servlet-mapping>
   
--->
-
   <welcome-file-list>
     <welcome-file>/app/listas</welcome-file>
     
   </welcome-file-list>
 
+-->
+
+
+  <filter>
+    <filter-name>MF</filter-name>
+    <filter-class>br.com.alura.firstweb.servlet.MonitoraFiltro</filter-class> 
+  </filter>
+
+  <filter-mapping>
+    <filter-name>MF</filter-name>
+    <url-pattern>/entrada</url-pattern>
+  </filter-mapping>
+
+  <filter>
+    <filter-name>AF</filter-name>
+    <filter-class>br.com.alura.firstweb.servlet.AutenticacaoFiltro</filter-class> 
+  </filter>
+
+  <filter-mapping>
+    <filter-name>AF</filter-name>
+    <url-pattern>/entrada</url-pattern>
+  </filter-mapping>
+
+  <filter>
+    <filter-name>CF</filter-name>
+    <filter-class>br.com.alura.firstweb.servlet.ControllerFiltro</filter-class> 
+  </filter>
+
+  <filter-mapping>
+    <filter-name>CF</filter-name>
+    <url-pattern>/entrada</url-pattern>
+  </filter-mapping>
+
   <session-config>
     <!-- 10 min -->
     <session-timeout>10</session-timeout>
-</session-config> 
+  </session-config> 
 
 </web-app>

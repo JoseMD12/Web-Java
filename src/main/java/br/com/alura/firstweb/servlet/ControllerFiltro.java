@@ -2,35 +2,31 @@ package br.com.alura.firstweb.servlet;
 
 import java.io.IOException;
 
+import javax.servlet.Filter;
+import javax.servlet.FilterChain;
+import javax.servlet.FilterConfig;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
+import javax.servlet.ServletRequest;
+import javax.servlet.ServletResponse;
+import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
-import br.com.alura.firstweb.acao.*;
-import br.com.alura.firstweb.modelo.Banco;
+import br.com.alura.firstweb.acao.Acao;
 
-@WebServlet(urlPatterns="/entrada")
-public class App extends HttpServlet{
-
-    public static Banco b = new Banco();
-
-    private static final long serialVersionUID = 2806421523585360625L;
+@WebFilter("/entrada")
+public class ControllerFiltro implements Filter{
 
     @Override
-    protected void service(HttpServletRequest req, HttpServletResponse res) throws IOException, ServletException{
+    public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
+            throws IOException, ServletException {
 
+        HttpServletRequest req = (HttpServletRequest) request;
+        HttpServletResponse res = (HttpServletResponse) response;
+        
         String acao = req.getParameter("acao");
 
-        HttpSession session = req.getSession();
-        boolean isLogado = !(session.getAttribute("userLogin") == null);
-        boolean isAcaoProtegida = !(acao.equals("Login") || acao.equals("LoginFormulario"));
-        if(isAcaoProtegida && !isLogado){
-            res.sendRedirect("/entrada?acao=LoginFormulario");
-        }
         String redirecionamento;
     
         try {
@@ -56,6 +52,13 @@ public class App extends HttpServlet{
             res.sendRedirect(endereco[1]);
 
         }
-        
     }
+
+
+    
+    public void init(FilterConfig filterConfig) throws ServletException {}
+
+    
+    public void destroy() {}
+    
 }
