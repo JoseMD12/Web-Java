@@ -79,7 +79,6 @@ buildNumber.properties
 *.htm
 *.html
 *.js
-*.jsp
 *.php
 *.rss
 *.wasm
